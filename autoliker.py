@@ -3,6 +3,9 @@
 import os
 import tinder
 
+def print_result(count):
+  print 'You swiped right on ' + str(count) + ' people in this session!'
+
 fbToken = {
   'facebook_token': os.environ['FACEBOOK_TOKEN'],
   'facebook_id': os.environ['FACEBOOK_ID']
@@ -14,12 +17,17 @@ tinder = tinder.tinderClient(fbToken)
 settings = {'distance_filter': 100}
 tinder.post_profile(settings)
 count = 0
-# TODO: error handle when your auth token expires and when you run out of
-# people close by.
+# TODO: error handle when your auth token expires.
 while True:
   try:
     # Keep getting recs, over and over
-    recs = tinder.get_recs()['results']
+    call = tinder.get_recs()
+    # You've run out of potential matches if this branch is taken.
+    if 'results' not in call:
+      print_result(count)
+      exit(0)
+      
+    recs = call['results']
     for rec in recs:
       name = rec['name']
       _id = rec['_id']
@@ -27,5 +35,5 @@ while True:
       print 'Liked ' + name + '!'
       count += 1
   except KeyboardInterrupt:
-    print '\nYou swiped right on ' + str(count) + ' people in this session!'
+    print_result(count)
     exit(0)
