@@ -19,5 +19,5 @@ fbToken = {
 }
 
 tinder = tinder.tinderClient(fbToken)
-# Print your first match to show that the code is working.
-print tinder.get_recs()['results'][0]
+# Print profile to show that the code is working.
+print tinder.get_profile()
