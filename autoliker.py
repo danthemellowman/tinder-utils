@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
 import os
+import sys
 import tinder
 
 def print_result(count):
   print 'You swiped right on ' + str(count) + ' people in this session!'
 
+facebook_token = sys.argv[1] if len(sys.argv) == 2 else os.environ['FACEBOOK_TOKEN']
+
 fbToken = {
-  'facebook_token': os.environ['FACEBOOK_TOKEN'],
+  'facebook_token': facebook_token,
   'facebook_id': os.environ['FACEBOOK_ID']
 }
 
